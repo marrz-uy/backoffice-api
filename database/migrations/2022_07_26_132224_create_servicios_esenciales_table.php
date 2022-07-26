@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vehiculos', function (Blueprint $table) {
+        Schema::create('servicios_esenciales', function (Blueprint $table) {
             $table->id();
-            $table->String('Matricula');
-            $table->String('Marca');
-            $table->String('Modelo');
+            $table->foreignId('puntosinteres_id')
+            ->constrained('puntosinteres')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->set('Tipo',['Hospitales','Farmacias','Cerrajerias','Estaciones de Servicio','Seccionales']);
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehiculos');
+        Schema::dropIfExists('servicios_esenciales');
     }
 };

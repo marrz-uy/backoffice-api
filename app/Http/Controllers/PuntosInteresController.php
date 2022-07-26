@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PuntosInteres;
+use App\Models\ServiciosEsenciales;
 use Illuminate\Http\Request;
 
 class PuntosInteresController extends Controller
@@ -44,28 +45,37 @@ class PuntosInteresController extends Controller
         $puntosInteres -> Contacto = $request->Contacto;
         $puntosInteres -> Horario = $request->Horario;
         $puntosInteres -> Descripcion = $request->Descripcion;
-        //$puntosInteres->request()->all;
+        $puntosInteres -> Imagen = $request->Imagen;
+        // if($request->hasFile('Imagen')){
+        //     $puntosInteres['Imagen']=$request->file('Imagen')->store('uploads','public');
+        // }
         $puntosInteres->save();
-        // return response()->json([
-        //     'message'     => 'Successfully registered User profile',
-        //     'userprofile' => $puntosInteres->PuntosInteres(),
-        // ]);
-        // return $puntosInteres;
-        
-        //PuntosInteres::insert($puntosInteres);
+        // $ultimopunto= PuntosInteres::latest('id')->first();
+
+        // $servicio = new ServiciosEscenciales();
+        // $servicio -> puntosinteres_id = $ultimopunto->id;
+        // $servicio -> Tipo = $request->Tipo;
+        // $servicio->save();
         //return $puntosInteres;
         return response()->json([
             "codigo"=>"200",
             "respuesta"=>"Se ingreso con exito"
            ]);
     }
+    public function AltaDeServicio(Request $request)
+    {
+        $servicio = new ServiciosEsenciales();
+        $u=PuntosInteres::latest('id')->first();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PuntosInteres  $puntosInteres
-     * @return \Illuminate\Http\Response
-     */
+        $servicio->puntosinteres_id=$u->id;
+        $servicio->Tipo=$request->Tipo;
+        $servicio->save();
+        return response()->json([
+            "codigo"=>"200",
+            "respuesta"=>"Se ingreso con exito"
+           ]);
+    }
+   
     public function show()
     {
         //$p= modelo::findOrFail($id);
@@ -73,24 +83,13 @@ class PuntosInteresController extends Controller
         return response()->json($puntosInteres);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PuntosInteres  $puntosInteres
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function edit(PuntosInteres $puntosInteres)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PuntosInteres  $puntosInteres
-     * @return \Illuminate\Http\Response
-     */
+  
     public function update(Request $request, $IdPuntoDeInteres)
     {
         $p = PuntosInteres::find($IdPuntoDeInteres);
@@ -109,12 +108,6 @@ class PuntosInteresController extends Controller
            ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PuntosInteres  $puntosInteres
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, $IdPuntoDeInteres)
     {
         $p = PuntosInteres::find($IdPuntoDeInteres);
