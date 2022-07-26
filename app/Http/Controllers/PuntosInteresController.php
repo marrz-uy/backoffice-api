@@ -53,7 +53,11 @@ class PuntosInteresController extends Controller
         // return $puntosInteres;
         
         //PuntosInteres::insert($puntosInteres);
-        return $puntosInteres;
+        //return $puntosInteres;
+        return response()->json([
+            "codigo"=>"200",
+            "respuesta"=>"Se ingreso con exito"
+           ]);
     }
 
     /**
@@ -64,6 +68,7 @@ class PuntosInteresController extends Controller
      */
     public function show()
     {
+        //$p= modelo::findOrFail($id);
         $puntosInteres['puntointeres']=PuntosInteres::all();
         return response()->json($puntosInteres);
     }
