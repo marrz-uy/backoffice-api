@@ -19,7 +19,13 @@
             </form>
         </div>
     </div>
-    
+    @if($autenticado == true)
+
+
+    @endif;
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/"></script>
 </body>
 </html>

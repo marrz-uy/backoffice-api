@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PuntosInteres;
 use App\Models\ServiciosEsenciales;
 use Illuminate\Http\Request;
-
+use Validator;
 class PuntosInteresController extends Controller
 {
     /**
@@ -37,6 +37,22 @@ class PuntosInteresController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'Nombre'    => 'required',
+            'Departamento' => 'required',
+            'Ciudad' => 'required',
+            'Direccion' => 'required'
+        ], [
+            'Nombre.required'    => 'El nombre es obligatorio',
+            'Departamento.required'    => 'El Departamento es obligatorio',
+            'Ciudad.required'    => 'La Ciudad es obligatorio',
+            'Direccion.required'    => 'La direccion es obligatorio'
+        ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
         $puntosInteres = new PuntosInteres();
         $puntosInteres -> Nombre = $request->Nombre;
         $puntosInteres -> Departamento = $request->Departamento;
@@ -46,39 +62,44 @@ class PuntosInteresController extends Controller
         $puntosInteres -> Horario = $request->Horario;
         $puntosInteres -> Descripcion = $request->Descripcion;
         $puntosInteres -> Imagen = $request->Imagen;
-        // if($request->hasFile('Imagen')){
-        //     $puntosInteres['Imagen']=$request->file('Imagen')->store('uploads','public');
-        // }
         $puntosInteres->save();
-        // $ultimopunto= PuntosInteres::latest('id')->first();
-
-        // $servicio = new ServiciosEscenciales();
-        // $servicio -> puntosinteres_id = $ultimopunto->id;
-        // $servicio -> Tipo = $request->Tipo;
-        // $servicio->save();
-        //return $puntosInteres;
+        $p= json_decode($request -> InformacionDetalladaPuntoDeInteres);
+        $id= PuntosInteres::latest('id')->first();
+        if($p->Op==='ServicioEsencial'){
+          return  $this->AltaDeServicio($id->id,$p->Tipo);
+        }
+        
+        // if($request->hasFile('Imagen')){
+        //      $request->file('Imagen')->store('uploads','public');
+        //  }
         return response()->json([
             "codigo"=>"200",
             "respuesta"=>"Se ingreso con exito"
            ]);
+
     }
-    public function AltaDeServicio(Request $request)
+    public function AltaDeServicio($IdPuntoDeInteres, $tipoDeServicio)
     {
         $servicio = new ServiciosEsenciales();
-        $u=PuntosInteres::latest('id')->first();
-
-        $servicio->puntosinteres_id=$u->id;
-        $servicio->Tipo=$request->Tipo;
+        $servicio->puntosinteres_id=$IdPuntoDeInteres;
+        $servicio->Tipo=$tipoDeServicio;
         $servicio->save();
         return response()->json([
             "codigo"=>"200",
             "respuesta"=>"Se ingreso con exito"
            ]);
+                // return response()->json([
+                //         "ID"=>$IdPuntoDeInteres,
+                //         "Tipo"=>$tipoDeServicio
+                //     ]);
+                    //return $servicio;
     }
    
-    public function show()
+    public function show(Request $request)
     {
         //$p= modelo::findOrFail($id);
+        //$Servicio = DB::table('puntosinteres')->Join($categoria)->get();
+        
         $puntosInteres['puntointeres']=PuntosInteres::all();
         return response()->json($puntosInteres);
     }
