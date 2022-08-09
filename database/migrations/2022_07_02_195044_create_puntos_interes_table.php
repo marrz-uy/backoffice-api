@@ -20,8 +20,9 @@ return new class extends Migration
             $table->String('Ciudad')->nullable();
             $table->String('Direccion')->nullable();
             $table->JSON('Contacto')->nullable();
-            $table->String('Horario')->nullable();
+            $table->JSON('Horario')->nullable();
             $table->String('Descripcion')->nullable();
+            $table->String('Imagen')->nullable();
             $table->timestamps();
         });
     }

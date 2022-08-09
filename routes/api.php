@@ -20,5 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Route::resource('PuntosInteres',PuntosInteresController::class);
 Route::post('/PuntosInteres', [PuntosInteresController::class, 'store']);
 Route::get('/PuntosInteres', [PuntosInteresController::class, 'show']);
-Route::patch('/PuntosInteres/{d}', [PuntosInteresController::class, 'update']);
+Route::get('/PuntosInteres/{s}', [PuntosInteresController::class, 'show']);
+
+Route::patch('/PuntosInteres/{s}/{d}', [PuntosInteresController::class, 'update']);
 Route::delete('/PuntosInteres/{id}', [PuntosInteresController::class, 'destroy']);
+
+//Route::post('/PuntosInteres', [PuntosInteresController::class, 'AltaDeServicio']);
