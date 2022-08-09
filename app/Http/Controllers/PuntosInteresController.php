@@ -95,11 +95,11 @@ class PuntosInteresController extends Controller
                     //return $servicio;
     }
    
-    public function show(Request $request)
+    public function show(Request $request, $categoria)
     {
         //$p= modelo::findOrFail($id);
         //$Servicio = DB::table('puntosinteres')->Join($categoria)->get();
-        
+        //$Servicio = DB::table('puntosinteres')->join('servicios_esenciales','puntosinteres.id','=','puntosinteres_id')->get();
         $puntosInteres['puntointeres']=PuntosInteres::all();
         return response()->json($puntosInteres);
     }
