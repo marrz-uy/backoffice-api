@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\PuntosInteres;
 use App\Models\ServiciosEsenciales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Validator;
 class PuntosInteresController extends Controller
 {
@@ -95,12 +97,11 @@ class PuntosInteresController extends Controller
                     //return $servicio;
     }
    
-    public function show(Request $request, $categoria)
+    public function show(Request $request)
     {
         //$p= modelo::findOrFail($id);
-        //$Servicio = DB::table('puntosinteres')->Join($categoria)->get();
-        //$Servicio = DB::table('puntosinteres')->join('servicios_esenciales','puntosinteres.id','=','puntosinteres_id')->get();
-        $puntosInteres['puntointeres']=PuntosInteres::all();
+        $puntosInteres = DB::table('puntosinteres')->join('servicios_esenciales','puntosinteres.id','=','puntosinteres_id')->get();
+        //$puntosInteres['puntointeres']=PuntosInteres::all();
         return response()->json($puntosInteres);
     }
 
