@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 //Route::resource('PuntosInteres',PuntosInteresController::class);
 Route::post('/PuntosInteres', [PuntosInteresController::class, 'store']);
-Route::get('/PuntosInteres', [PuntosInteresController::class, 'ListarPuntosDeInteres']);
+Route::get('/PuntosInteres/{Categoria}', [PuntosInteresController::class, 'ListarPuntosDeInteres']);
 //Route::get('/PuntosInteres/{s}', [PuntosInteresController::class, 'show']);
 
 Route::patch('/PuntosInteres/{s}/{d}', [PuntosInteresController::class, 'update']);
