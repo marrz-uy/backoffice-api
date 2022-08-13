@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\PuntosInteresController;
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 //Route::resource('PuntosInteres',PuntosInteresController::class);
 Route::post('/PuntosInteres', [PuntosInteresController::class, 'store']);
-Route::get('/PuntosInteres', [PuntosInteresController::class, 'show']);
-Route::get('/PuntosInteres/{s}', [PuntosInteresController::class, 'show']);
+Route::get('/PuntosInteres/{Categoria}', [PuntosInteresController::class, 'ListarPuntosDeInteres']);
+//Route::get('/PuntosInteres/{s}', [PuntosInteresController::class, 'show']);
 
 Route::patch('/PuntosInteres/{s}/{d}', [PuntosInteresController::class, 'update']);
 Route::delete('/PuntosInteres/{id}', [PuntosInteresController::class, 'destroy']);

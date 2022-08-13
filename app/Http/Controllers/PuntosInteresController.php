@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\PuntosInteres;
 use App\Models\ServiciosEsenciales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Validator;
 class PuntosInteresController extends Controller
 {
@@ -53,6 +55,7 @@ class PuntosInteresController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
         $puntosInteres = new PuntosInteres();
         $puntosInteres -> Nombre = $request->Nombre;
         $puntosInteres -> Departamento = $request->Departamento;
@@ -68,7 +71,6 @@ class PuntosInteresController extends Controller
         if($p->Op==='ServicioEsencial'){
           return  $this->AltaDeServicio($id->id,$p->Tipo);
         }
-        
         // if($request->hasFile('Imagen')){
         //      $request->file('Imagen')->store('uploads','public');
         //  }
@@ -95,13 +97,13 @@ class PuntosInteresController extends Controller
                     //return $servicio;
     }
    
-    public function show(Request $request, $categoria)
+    public function ListarPuntosDeInteres(Request $request, $categoria)
     {
         //$p= modelo::findOrFail($id);
-        //$Servicio = DB::table('puntosinteres')->Join($categoria)->get();
-        //$Servicio = DB::table('puntosinteres')->join('servicios_esenciales','puntosinteres.id','=','puntosinteres_id')->get();
-        $puntosInteres['puntointeres']=PuntosInteres::all();
+        $puntosInteres = DB::table('puntosinteres')->Join($categoria,'puntosinteres.id','=','puntosinteres_id')->get();
+        //$puntosInteres=PuntosInteres::paginate(10);
         return response()->json($puntosInteres);
+        //servicios_esenciales
     }
 
  
