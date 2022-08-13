@@ -5,35 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\PuntosInteres;
 use App\Models\ServiciosEsenciales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Validator;
 class PuntosInteresController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
@@ -53,6 +29,7 @@ class PuntosInteresController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
         $puntosInteres = new PuntosInteres();
         $puntosInteres -> Nombre = $request->Nombre;
         $puntosInteres -> Departamento = $request->Departamento;
@@ -68,10 +45,6 @@ class PuntosInteresController extends Controller
         if($p->Op==='ServicioEsencial'){
           return  $this->AltaDeServicio($id->id,$p->Tipo);
         }
-        
-        // if($request->hasFile('Imagen')){
-        //      $request->file('Imagen')->store('uploads','public');
-        //  }
         return response()->json([
             "codigo"=>"200",
             "respuesta"=>"Se ingreso con exito"
@@ -88,29 +61,15 @@ class PuntosInteresController extends Controller
             "codigo"=>"200",
             "respuesta"=>"Se ingreso con exito"
            ]);
-                // return response()->json([
-                //         "ID"=>$IdPuntoDeInteres,
-                //         "Tipo"=>$tipoDeServicio
-                //     ]);
-                    //return $servicio;
     }
    
-    public function show(Request $request, $categoria)
+    public function ListarPuntosDeInteres(Request $request, $categoria)
     {
-        //$p= modelo::findOrFail($id);
-        //$Servicio = DB::table('puntosinteres')->Join($categoria)->get();
-        //$Servicio = DB::table('puntosinteres')->join('servicios_esenciales','puntosinteres.id','=','puntosinteres_id')->get();
-        $puntosInteres['puntointeres']=PuntosInteres::all();
+        $puntosInteres = DB::table('puntosinteres')->Join($categoria,'puntosinteres.id','=','puntosinteres_id')->get();
         return response()->json($puntosInteres);
     }
 
  
-    public function edit(PuntosInteres $puntosInteres)
-    {
-        //
-    }
-
-  
     public function update(Request $request, $IdPuntoDeInteres)
     {
         $p = PuntosInteres::find($IdPuntoDeInteres);
