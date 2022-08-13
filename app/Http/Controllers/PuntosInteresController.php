@@ -10,32 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 class PuntosInteresController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
@@ -71,9 +45,6 @@ class PuntosInteresController extends Controller
         if($p->Op==='ServicioEsencial'){
           return  $this->AltaDeServicio($id->id,$p->Tipo);
         }
-        // if($request->hasFile('Imagen')){
-        //      $request->file('Imagen')->store('uploads','public');
-        //  }
         return response()->json([
             "codigo"=>"200",
             "respuesta"=>"Se ingreso con exito"
@@ -90,29 +61,15 @@ class PuntosInteresController extends Controller
             "codigo"=>"200",
             "respuesta"=>"Se ingreso con exito"
            ]);
-                // return response()->json([
-                //         "ID"=>$IdPuntoDeInteres,
-                //         "Tipo"=>$tipoDeServicio
-                //     ]);
-                    //return $servicio;
     }
    
     public function ListarPuntosDeInteres(Request $request, $categoria)
     {
-        //$p= modelo::findOrFail($id);
         $puntosInteres = DB::table('puntosinteres')->Join($categoria,'puntosinteres.id','=','puntosinteres_id')->get();
-        //$puntosInteres=PuntosInteres::paginate(10);
         return response()->json($puntosInteres);
-        //servicios_esenciales
     }
 
  
-    public function edit(PuntosInteres $puntosInteres)
-    {
-        //
-    }
-
-  
     public function update(Request $request, $IdPuntoDeInteres)
     {
         $p = PuntosInteres::find($IdPuntoDeInteres);
