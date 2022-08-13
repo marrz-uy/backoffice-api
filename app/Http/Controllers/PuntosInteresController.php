@@ -55,6 +55,7 @@ class PuntosInteresController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
         $puntosInteres = new PuntosInteres();
         $puntosInteres -> Nombre = $request->Nombre;
         $puntosInteres -> Departamento = $request->Departamento;
@@ -70,7 +71,6 @@ class PuntosInteresController extends Controller
         if($p->Op==='ServicioEsencial'){
           return  $this->AltaDeServicio($id->id,$p->Tipo);
         }
-        
         // if($request->hasFile('Imagen')){
         //      $request->file('Imagen')->store('uploads','public');
         //  }
@@ -100,8 +100,8 @@ class PuntosInteresController extends Controller
     public function ListarPuntosDeInteres(Request $request)
     {
         //$p= modelo::findOrFail($id);
-        //$puntosInteres = DB::table('puntosinteres')->leftJoin('servicios_esenciales','puntosinteres.id','=','puntosinteres_id')->get();
-        $puntosInteres=PuntosInteres::paginate(10);
+        $puntosInteres = DB::table('puntosinteres')->Join('servicios_esenciales','puntosinteres.id','=','puntosinteres_id')->get();
+        //$puntosInteres=PuntosInteres::paginate(10);
         return response()->json($puntosInteres);
     }
 
