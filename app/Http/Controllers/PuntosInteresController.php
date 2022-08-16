@@ -69,7 +69,11 @@ class PuntosInteresController extends Controller
 
             $categoria = 'servicios_esenciales';
 
-            $puntosInteres = DB::table('puntosinteres')->Join($categoria, 'puntosinteres.id', '=', 'puntosinteres_id')->where($categoria . '.tipo', '=', $Tipo)->paginate(10);
+            $puntosInteres = DB::table('puntosinteres')
+                ->Join($categoria, 'puntosinteres.id', '=', 'puntosinteres_id')
+                ->where($categoria . '.tipo', '=', $Tipo)
+                ->paginate(10);
+
             return response()->json($puntosInteres);
         }
     }

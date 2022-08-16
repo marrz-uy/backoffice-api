@@ -14,8 +14,6 @@ use App\Http\Controllers\PuntosInteresController;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
-Route::get('/', function () {
-    return view('Usuarios.UsuariosAlta');
-});
+
