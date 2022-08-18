@@ -63,11 +63,17 @@ class PuntosInteresController extends Controller
         ]);
     }
 
-    public function ListarPuntosDeInteres(Request $request, $Nombre)
+    public function ListarPuntosDeInteres(Request $request, $Categoria)
     {
-
-        $puntos = DB::table('puntosinteres') -> where('nombre', 'like', '%' . $Nombre . '%')->paginate(10);
-        return response() ->json($puntos);
+        if($Categoria==='PuntosDeInteres'){
+            $PuntosDeInteres=PuntosInteres::all();
+            return response() ->json($PuntosDeInteres);
+        }
+        $puntos = DB::table('puntosinteres')
+        ->join('servicios_esenciales','puntosinteres.id','=','servicios_esenciales.puntosinteres_id')
+        ->paginate(10);
+        // $puntos = DB::table('puntosinteres') -> where('nombre', 'like', '%' . $Nombre . '%')->paginate(10);
+        // return response() ->json($puntos);
 
     }
 
