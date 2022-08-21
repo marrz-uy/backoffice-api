@@ -66,14 +66,14 @@ class PuntosInteresController extends Controller
     public function ListarPuntosDeInteres(Request $request, $Categoria)
     {
         if($Categoria==='PuntosDeInteres'){
-            $PuntosDeInteres=PuntosInteres::all();
+            $PuntosDeInteres=PuntosInteres::paginate(10);
             return response() ->json($PuntosDeInteres);
         }
-        $puntos = DB::table('puntosinteres')
-        ->join('servicios_esenciales','puntosinteres.id','=','servicios_esenciales.puntosinteres_id')
+        $puntosInteres = DB::table('puntosinteres')
+        ->Join($Categoria,'puntosinteres.id','=','puntosinteres_id')
         ->paginate(10);
-        // $puntos = DB::table('puntosinteres') -> where('nombre', 'like', '%' . $Nombre . '%')->paginate(10);
-        // return response() ->json($puntos);
+        
+        return response() ->json($puntosInteres);
 
     }
 
@@ -90,7 +90,7 @@ class PuntosInteresController extends Controller
 
     public function update(Request $request, $IdPuntoDeInteres)
     {
-        $p               = PuntosInteres::find($IdPuntoDeInteres);
+        $p               = PuntosInteres::findOrFail($IdPuntoDeInteres);
         $p->Nombre       = $request->Nombre;
         $p->Departamento = $request->Departamento;
         $p->Ciudad       = $request->Ciudad;
@@ -106,13 +106,23 @@ class PuntosInteresController extends Controller
         ]);
     }
 
-    public function destroy(Request $request, $IdPuntoDeInteres)
+    public function destroy(Request $request,$IdPuntoDeInteres,$Categoria)
     {
-        $p = PuntosInteres::find($IdPuntoDeInteres);
-        $p->delete();
+        if($Categoria==='PuntosDeInteres'){
+            $p = PuntosInteres::findOrFail($IdPuntoDeInteres);
+            $p->delete();
         return response()->json([
             "codigo"    => "200",
             "respuesta" => "Se elimino con exito",
         ]);
+        }
+        if($Categoria==='servicios_esenciales'){
+            $p = ServiciosEsenciales::findOrFail($IdPuntoDeInteres);
+            $p->delete();
+        return response()->json([
+            "codigo"    => "200",
+            "respuesta" => "Se elimino con exito",
+        ]);
+        }
     }
 }
