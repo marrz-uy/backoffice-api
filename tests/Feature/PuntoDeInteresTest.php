@@ -29,11 +29,36 @@ class PuntoDeInteresTest extends TestCase
         $response = $this->withHeaders([
             'content-type' => 'application/json',
         ])->postJson('/api/PuntosInteres', [
-            'email'                => 'martin2@gmail.com',
-            'password'             => '12345678',
-            'passwordConfirmation' => '12345678',
+            'Nombre'                => 'FarmaciaTEST',
+            'Departamento'             => 'Montevideo',
+            'Ciudad' => 'Montevideo',
+            'Direccion' => '18 de Julio 3014',
+            'Contacto'=>'29025010',
+            'Horario'=>null,
+            'Descripcion'=>'Farmaciadeltest',
+            'Imagen'=>null,
+            'Op'=>'ServicioEsencial',
+            'tipo'=>'Farmacias'
         ]);
         $response=$this->get('/')->assertStatus(200);
+       //$response->assertStatus(200);
     }
-    
+    public function test_Baja_De_Servicio(){
+        $response = $this->withHeaders([
+            'content-type' => 'application/json',
+        ])->postJson('/api/PuntosInteres', [
+            'Nombre'                => 'FarmaciaTEST',
+            'Departamento'             => 'Montevideo',
+            'Ciudad' => 'Montevideo',
+            'Direccion' => '18 de Julio 3014',
+            'Contacto'=>'29025010',
+            'Horario'=>null,
+            'Descripcion'=>'Farmaciadeltest',
+            'Imagen'=>null,
+            'Op'=>'ServicioEsencial',
+            'tipo'=>'Farmacias'
+        ]);
+        $response=$this->get('/')->assertStatus(200);
+       //$response->assertStatus(200);
+    }
 }
