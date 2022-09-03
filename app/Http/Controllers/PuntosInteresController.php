@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PuntosInteres;
 use App\Models\ServiciosEsenciales;
+use App\Models\Telefonos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -12,7 +13,7 @@ class PuntosInteresController extends Controller
 {
     public function store(Request $request)
     {
-        //
+        
         $validator = Validator::make($request->all(), [
             'Nombre'       => 'required',
             'Departamento' => 'required',
@@ -35,13 +36,16 @@ class PuntosInteresController extends Controller
         $puntosInteres->Departamento = $request->Departamento;
         $puntosInteres->Ciudad       = $request->Ciudad;
         $puntosInteres->Direccion    = $request->Direccion;
-        $puntosInteres->Contacto     = $request->Contacto;
-        $puntosInteres->Horario      = $request->Horario;
+        $puntosInteres->HoraDeApertura = $request->HoraDeApertura;
+        $puntosInteres->HoraDeCierre = $request->HoraDeCierre;
+        $puntosInteres->Facebook     = $request->Facebook;
+        $puntosInteres->Instagram    = $request->Instagram;
         $puntosInteres->Descripcion  = $request->Descripcion;
         $puntosInteres->Imagen       = $request->Imagen;
         $puntosInteres->save();
         $p  = json_decode($request->InformacionDetalladaPuntoDeInteres);
         $id = PuntosInteres::latest('id')->first();
+        $this->AltaDeTelefono($id->id,$request->Telefono);
         if ($p->Op === 'ServicioEsencial') {
             return $this->AltaDeServicio($id->id, $p->Tipo);
         }
@@ -61,6 +65,12 @@ class PuntosInteresController extends Controller
             "codigo"    => "200",
             "respuesta" => "Se ingreso con exito",
         ]);
+    }
+    public function AltaDeTelefono($id,$Telefonos){
+        $Telefono=new Telefonos();
+        $Telefono->puntosinteres_id=$id;
+        $Telefono->Telefono=$Telefonos;
+        $Telefono->save();
     }
 
     public function ListarPuntosDeInteres(Request $request, $Categoria)
@@ -90,22 +100,27 @@ class PuntosInteresController extends Controller
 
     public function update(Request $request, $IdPuntoDeInteres)
     {
-        $p               = PuntosInteres::findOrFail($IdPuntoDeInteres);
-        $p->Nombre       = $request->Nombre;
-        $p->Departamento = $request->Departamento;
-        $p->Ciudad       = $request->Ciudad;
-        $p->Direccion    = $request->Direccion;
-        $p->Contacto     = $request->Contacto;
-        $p->Horario      = $request->Horario;
-        $p->Descripcion  = $request->Descripcion;
-        $p->save();
+        $puntosInteres               = PuntosInteres::findOrFail($IdPuntoDeInteres);
+        $puntosInteres->Nombre       = $request->Nombre;
+        $puntosInteres->Departamento = $request->Departamento;
+        $puntosInteres->Ciudad       = $request->Ciudad;
+        $puntosInteres->Direccion    = $request->Direccion;
+        $puntosInteres->HoraDeApertura = $request->HoraDeApertura;
+        $puntosInteres->HoraDeCierre = $request->HoraDeCierre;
+        $puntosInteres->Facebook     = $request->Facebook;
+        $puntosInteres->Instagram    = $request->Instagram;
+        $puntosInteres->Descripcion  = $request->Descripcion;
+        $puntosInteres->Imagen       = $request->Imagen;
+        $puntosInteres->save();
 
         return response()->json([
             "codigo"    => "200",
             "respuesta" => "Se modifico con exito",
         ]);
     }
-
+    public function ModificarTelefonos($id,$Telefono){
+        
+    }
     public function destroy(Request $request,$IdPuntoDeInteres,$Categoria)
     {
         if($Categoria==='PuntosDeInteres'){
