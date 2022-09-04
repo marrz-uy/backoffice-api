@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PuntosInteres;
 use App\Models\ServiciosEsenciales;
 use App\Models\Telefonos;
+use App\Models\Espectaculos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -43,11 +44,14 @@ class PuntosInteresController extends Controller
         $puntosInteres->Descripcion  = $request->Descripcion;
         $puntosInteres->Imagen       = $request->Imagen;
         $puntosInteres->save();
-        $p  = json_decode($request->InformacionDetalladaPuntoDeInteres);
+        $PuntosDeInteresDetallado  = json_decode($request->InformacionDetalladaPuntoDeInteres);
         $id = PuntosInteres::latest('id')->first();
         $this->AltaDeTelefono($id->id,$request->Telefono);
-        if ($p->Op === 'ServicioEsencial') {
-            return $this->AltaDeServicio($id->id, $p->Tipo);
+        if ($PuntosDeInteresDetallado->Op === 'ServicioEsencial') {
+            return $this->AltaDeServicio($id->id, $PuntosDeInteresDetallado->Tipo);
+        }
+        if ($PuntosDeInteresDetallado->Op === 'Espectaculos') {
+            return $this->AltaDeEspectaculos($id->id,$PuntosDeInteresDetallado->Artista,$PuntosDeInteresDetallado->PrecioEntrada,$PuntosDeInteresDetallado->Tipo);
         }
         return response()->json([
             "codigo"    => "200",
@@ -55,12 +59,25 @@ class PuntosInteresController extends Controller
         ]);
 
     }
-    public function AltaDeServicio($IdPuntoDeInteres, $tipoDeServicio)
+    public function AltaDeServicio($IdPuntoDeInteres, $TipoDetallado)
     {
         $servicio                   = new ServiciosEsenciales();
         $servicio->puntosinteres_id = $IdPuntoDeInteres;
-        $servicio->Tipo             = $tipoDeServicio;
+        $servicio->Tipo             = $TipoDetallado;
         $servicio->save();
+        return response()->json([
+            "codigo"    => "200",
+            "respuesta" => "Se ingreso con exito",
+        ]);
+    }
+    public function AltaDeEspectaculos($IdPuntoDeInteres,$Artista,$PrecioEntrada,$tipoDeServicio)
+    {
+        $Espectaculo                   = new Espectaculos();
+        $Espectaculo->puntosinteres_id = $IdPuntoDeInteres;
+        $Espectaculo->Artista          = $Artista;
+        $Espectaculo->PrecioEntrada    = $PrecioEntrada;
+        $Espectaculo->Tipo             = $tipoDeServicio;
+        $Espectaculo->save();
         return response()->json([
             "codigo"    => "200",
             "respuesta" => "Se ingreso con exito",
