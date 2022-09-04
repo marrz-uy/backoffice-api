@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('telefonos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('puntosinteres_id')
-            ->constrained('puntosinteres');
+            ->constrained('puntosinteres')
+            ->onDelete('cascade');
             $table->integer('Telefono');
             $table->timestamps();
         });

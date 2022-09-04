@@ -20,11 +20,13 @@ class PuntosInteresController extends Controller
             'Departamento' => 'required',
             'Ciudad'       => 'required',
             'Direccion'    => 'required',
+            'Telefono'     => 'required' 
         ], [
             'Nombre.required'       => 'El nombre es obligatorio',
             'Departamento.required' => 'El Departamento es obligatorio',
             'Ciudad.required'       => 'La Ciudad es obligatorio',
             'Direccion.required'    => 'La direccion es obligatorio',
+            'Telefono.required'     => 'El Telefono es obligatorio',
         ]
         );
 
@@ -138,23 +140,37 @@ class PuntosInteresController extends Controller
     public function ModificarTelefonos($id,$Telefono){
         
     }
-    public function destroy(Request $request,$IdPuntoDeInteres,$Categoria)
+    public function destroy($IdPuntoDeInteres)
     {
-        if($Categoria==='PuntosDeInteres'){
-            $p = PuntosInteres::findOrFail($IdPuntoDeInteres);
-            $p->delete();
-        return response()->json([
+        $Punto=PuntosInteres::findOrFail($IdPuntoDeInteres);
+        $Punto->delete();
+         return response()->json([
             "codigo"    => "200",
             "respuesta" => "Se elimino con exito",
         ]);
-        }
-        if($Categoria==='servicios_esenciales'){
-            $p = ServiciosEsenciales::findOrFail($IdPuntoDeInteres);
-            $p->delete();
-        return response()->json([
-            "codigo"    => "200",
-            "respuesta" => "Se elimino con exito",
-        ]);
-        }
+        // if($Categoria==='PuntosDeInteres'){
+        //     $p = PuntosInteres::findOrFail($IdPuntoDeInteres);
+        //     $p->delete();
+        // return response()->json([
+        //     "codigo"    => "200",
+        //     "respuesta" => "Se elimino con exito",
+        // ]);
+        // }
+        // if($Categoria==='servicios_esenciales'){
+        //     $p = ServiciosEsenciales::findOrFail($IdPuntoDeInteres);
+        //     $p->delete();
+        // return response()->json([
+        //     "codigo"    => "200",
+        //     "respuesta" => "Se elimino con exito",
+        // ]);
+        // }
+        // if($Categoria==='espectaculos'){
+        //     $p = Espectaculos::findOrFail($IdPuntoDeInteres);
+        //     $p->delete();
+        // return response()->json([
+        //     "codigo"    => "200",
+        //     "respuesta" => "Se elimino con exito",
+        // ]);
+        // }
     }
 }

@@ -10,4 +10,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/PuntosInteres', [PuntosInteresController::class, 'store']);
 Route::get('/PuntosInteres/{Categoria}', [PuntosInteresController::class, 'ListarPuntosDeInteres']);
 Route::patch('/PuntosInteres/{id}', [PuntosInteresController::class, 'update']);
-Route::delete('/PuntosInteres/{id}/{Categoria}', [PuntosInteresController::class, 'destroy']);
+Route::delete('/PuntosInteres/{id}', [PuntosInteresController::class, 'destroy']);

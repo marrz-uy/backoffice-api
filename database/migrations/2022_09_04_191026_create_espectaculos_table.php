@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('espectaculos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('puntosinteres_id')
-            ->constrained('puntosinteres');
+            ->constrained('puntosinteres')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->String('Artista');
             $table->integer('PrecioEntrada');
             $table->set('Tipo',['Cine','Carnaval','Teatro','EventoDeportivo']);

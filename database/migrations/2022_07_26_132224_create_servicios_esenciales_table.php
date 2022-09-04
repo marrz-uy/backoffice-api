@@ -12,7 +12,9 @@ return new class extends Migration
         Schema::create('servicios_esenciales', function (Blueprint $table) {
             $table->id();
             $table->foreignId('puntosinteres_id')
-            ->constrained('puntosinteres');
+            ->constrained('puntosinteres')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->set('Tipo',['Hospitales','Farmacias','Cerrajerias','Estaciones de Servicio','Seccionales']);
             $table->timestamps();
             $table->softDeletes();
