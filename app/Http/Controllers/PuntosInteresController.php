@@ -122,37 +122,44 @@ class PuntosInteresController extends Controller
         return response() ->json($puntosInteres);
 
     }
-
-    private function buscarServicioEscencial($Tipo){
-            $categoria = 'servicios_esenciales';
-            $puntosInteres = DB::table('puntosinteres')
-                ->Join($categoria, 'puntosinteres.id', '=', 'puntosinteres_id')
-                ->where($categoria . '.tipo', '=', $Tipo)
-                ->paginate(10);
-
-            return response()->json($puntosInteres);
-
-    }
-
     public function update(Request $request, $IdPuntoDeInteres)
     {
-        $puntosInteres               = PuntosInteres::findOrFail($IdPuntoDeInteres);
-        $puntosInteres->Nombre       = $request->Nombre;
-        $puntosInteres->Departamento = $request->Departamento;
-        $puntosInteres->Ciudad       = $request->Ciudad;
-        $puntosInteres->Direccion    = $request->Direccion;
-        $puntosInteres->HoraDeApertura = $request->HoraDeApertura;
-        $puntosInteres->HoraDeCierre = $request->HoraDeCierre;
-        $puntosInteres->Facebook     = $request->Facebook;
-        $puntosInteres->Instagram    = $request->Instagram;
-        $puntosInteres->Descripcion  = $request->Descripcion;
-        $puntosInteres->Imagen       = $request->Imagen;
-        $puntosInteres->save();
+        //$puntosInteres               = PuntosInteres::findOrFail($IdPuntoDeInteres);
+        // $puntosInteres->Nombre       = $request->Nombre;
+        // $puntosInteres->Departamento = $request->Departamento;
+        // $puntosInteres->Ciudad       = $request->Ciudad;
+        // $puntosInteres->Direccion    = $request->Direccion;
+        // $puntosInteres->HoraDeApertura = $request->HoraDeApertura;
+        // $puntosInteres->HoraDeCierre = $request->HoraDeCierre;
+        // $puntosInteres->Facebook     = $request->Facebook;
+        // $puntosInteres->Instagram    = $request->Instagram;
+        // $puntosInteres->Descripcion  = $request->Descripcion;
+        // $puntosInteres->Imagen       = $request->Imagen;
+        // $puntosInteres->save();
 
-        return response()->json([
-            "codigo"    => "200",
-            "respuesta" => "Se modifico con exito",
-        ]);
+        // return response()->json([
+        //     "codigo"    => "200",
+        //     "respuesta" => "Se modifico con exito",
+        // ]);
+        return $this->ModificarEspectaculos($IdPuntoDeInteres);
+        
+    }
+    public function ModificarEspectaculos($IdPuntoDeInteres){
+        // $Espectaculo->puntosinteres_id = $IdPuntoDeInteres;
+        // $Espectaculo->Artista          = $Artista;
+        // $Espectaculo->PrecioEntrada    = $PrecioEntrada;
+        // $Espectaculo->Tipo             = $tipoDeServicio;
+        // $Espectaculo->save();
+        // return response()->json([
+        //     "codigo"    => "200",
+        //     "respuesta" => "Se ingreso con exito",
+        // ]);
+        //$puntosInteres               = PuntosInteres::findOrFail($IdPuntoDeInteres);
+        $puntoInteres = DB::table('puntosinteres')
+            ->Join('espectaculos','puntosinteres.id','=','puntosinteres.id')
+            ->where('puntosinteres.id','=',$IdPuntoDeInteres)
+            ->get();
+        return response()->json(["respuesta"=>$puntoInteres]);
     }
     public function ModificarTelefonos($id,$Telefono){
         
