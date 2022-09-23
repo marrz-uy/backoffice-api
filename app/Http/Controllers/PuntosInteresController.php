@@ -97,6 +97,7 @@ class PuntosInteresController extends Controller
     public function ListarPuntosDeInteres(Request $request, $Categoria)
     {
         if($request->Opcion==='Unico'){
+            
             $puntoInteres = DB::table('puntosinteres')
             ->Join($request->Categoria,'puntosinteres.id','=','puntosinteres.id')
             ->where('puntosinteres.id','=',$request->id)
