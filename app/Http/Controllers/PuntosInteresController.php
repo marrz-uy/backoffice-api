@@ -97,11 +97,18 @@ class PuntosInteresController extends Controller
     public function ListarPuntosDeInteres(Request $request, $Categoria)
     {
         if($request->Opcion==='Unico'){
+            if($Categoria==='PuntosDeInteres'){
+            
+                $PuntosDeInteres=PuntosInteres::find($request->id);
+                return response() ->json($PuntosDeInteres);
+                
+            }
             $puntoInteres = DB::table('puntosinteres')
             ->Join($request->Categoria,'puntosinteres.id','=','puntosinteres.id')
             ->where('puntosinteres.id','=',$request->id)
             ->get();
             return response()->json($puntoInteres);
+
         }
         if($Categoria==='PuntosDeInteres'){
             
