@@ -144,31 +144,21 @@ class PuntosInteresController extends Controller
         $puntosInteres->save();
 
         return response()->json([
-            "codigo"    => "200",
+            "codigo"    => $IdPuntoDeInteres,
             "respuesta" => "Se modifico con exito",
         ]);
-        //return $this->ModificarEspectaculos($IdPuntoDeInteres);
+        //return $this->ModificarTelefonos($IdPuntoDeInteres,$request->Telefono);
         
     }
-    public function ModificarEspectaculos($IdPuntoDeInteres){
-        // $Espectaculo->puntosinteres_id = $IdPuntoDeInteres;
-        // $Espectaculo->Artista          = $Artista;
-        // $Espectaculo->PrecioEntrada    = $PrecioEntrada;
-        // $Espectaculo->Tipo             = $tipoDeServicio;
-        // $Espectaculo->save();
-        // return response()->json([
-        //     "codigo"    => "200",
-        //     "respuesta" => "Se ingreso con exito",
-        // ]);
-        //$puntosInteres               = PuntosInteres::findOrFail($IdPuntoDeInteres);
-        $puntoInteres = DB::table('puntosinteres')
-            ->Join('espectaculos','puntosinteres.id','=','puntosinteres.id')
-            ->where('puntosinteres.id','=',$IdPuntoDeInteres)
-            ->get();
-        return response()->json(["respuesta"=>$puntoInteres]);
-    }
+    
     public function ModificarTelefonos($id,$Telefono){
+        $telefono=DB::table('telefonos')
+        ->where('puntosinteres_id','=',$id)
+        ->where('Telefono','=',$Telefono)
+        ->get();
         
+        $telefono->Telefono=$Telefono;
+        $telefono->save();
     }
     public function destroy($IdPuntoDeInteres)
     {
