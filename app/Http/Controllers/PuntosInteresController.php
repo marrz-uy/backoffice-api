@@ -34,7 +34,8 @@ class PuntosInteresController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
+        try {
+        DB::beginTransaction();
         $puntosInteres               = new PuntosInteres();
         $puntosInteres->Nombre       = $request->Nombre;
         $puntosInteres->Departamento = $request->Departamento;
@@ -57,10 +58,16 @@ class PuntosInteresController extends Controller
         if ($PuntosDeInteresDetallado->Op === 'Espectaculos') {
             return $this->AltaDeEspectaculos($id->id,$PuntosDeInteresDetallado->Artista,$PuntosDeInteresDetallado->PrecioEntrada,$PuntosDeInteresDetallado->Tipo);
         }
+
+        DB::commit();
         return response()->json([
             "codigo"    => "200",
             "respuesta" => "Se ingreso con exito",
         ]);
+    }
+    catch(Exception $e){
+        DB::rollBack();
+    }
 
     }
     public function AltaDeServicio($IdPuntoDeInteres, $TipoDetallado)
@@ -104,7 +111,7 @@ class PuntosInteresController extends Controller
                 
             }
             $puntoInteres = DB::table('puntosinteres')
-            ->Join($request->Categoria,'puntosinteres.id','=','puntosinteres.id')
+            ->Join($request->Categoria,'puntosinteres.id','=','puntosinteres_id')
             ->where('puntosinteres.id','=',$request->id)
             ->get();
             return response()->json($puntoInteres);
@@ -130,35 +137,35 @@ class PuntosInteresController extends Controller
     }
     public function update(Request $request, $IdPuntoDeInteres)
     {
-        $puntosInteres               = PuntosInteres::findOrFail($IdPuntoDeInteres);
-        $puntosInteres->Nombre       = $request->Nombre;
-        $puntosInteres->Departamento = $request->Departamento;
-        $puntosInteres->Ciudad       = $request->Ciudad;
-        $puntosInteres->Direccion    = $request->Direccion;
-        $puntosInteres->HoraDeApertura = $request->HoraDeApertura;
-        $puntosInteres->HoraDeCierre = $request->HoraDeCierre;
-        $puntosInteres->Facebook     = $request->Facebook;
-        $puntosInteres->Instagram    = $request->Instagram;
-        $puntosInteres->Descripcion  = $request->Descripcion;
-        $puntosInteres->Imagen       = $request->Imagen;
-        $puntosInteres->save();
+        // $puntosInteres               = PuntosInteres::findOrFail($IdPuntoDeInteres);
+        // $puntosInteres->Nombre       = $request->Nombre;
+        // $puntosInteres->Departamento = $request->Departamento;
+        // $puntosInteres->Ciudad       = $request->Ciudad;
+        // $puntosInteres->Direccion    = $request->Direccion;
+        // $puntosInteres->HoraDeApertura = $request->HoraDeApertura;
+        // $puntosInteres->HoraDeCierre = $request->HoraDeCierre;
+        // $puntosInteres->Facebook     = $request->Facebook;
+        // $puntosInteres->Instagram    = $request->Instagram;
+        // $puntosInteres->Descripcion  = $request->Descripcion;
+        // $puntosInteres->Imagen       = $request->Imagen;
+        // $puntosInteres->save();
 
-        return response()->json([
-            "codigo"    => $IdPuntoDeInteres,
-            "respuesta" => "Se modifico con exito",
-        ]);
-        //return $this->ModificarTelefonos($IdPuntoDeInteres,$request->Telefono);
+        // return response()->json([
+        //     "codigo"    => '200',
+        //     "respuesta" => "Se modifico con exito",
+        // ]);
+        return $this->ModificarTelefonos($IdPuntoDeInteres,$request->Telefono);
         
     }
     
-    public function ModificarTelefonos($id,$Telefono){
+    public function ModificarTelefonos($id,$TelefonoViejo, $TelefonoNuevo){
         $telefono=DB::table('telefonos')
         ->where('puntosinteres_id','=',$id)
-        ->where('Telefono','=',$Telefono)
-        ->get();
-        
-        $telefono->Telefono=$Telefono;
-        $telefono->save();
+        ->where('Telefono','=',$TelefonoViejo)
+        ->update(['Telefono' => $TelefonoNuevo]);
+        return $telefono;
+        // $telefono->Telefono=$Telefono;
+        // $telefono->save();
     }
     public function destroy($IdPuntoDeInteres)
     {
