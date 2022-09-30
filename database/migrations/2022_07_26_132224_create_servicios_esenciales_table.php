@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
     public function up()
@@ -16,6 +17,7 @@ return new class extends Migration
             ->onDelete('cascade');
             $table->set('Tipo',['Hospitales','Farmacias','Cerrajerias','Estaciones de Servicio','Seccionales']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
     public function down()

@@ -15,8 +15,10 @@ return new class extends Migration
             $table->String('Departamento')->nullable();
             $table->String('Ciudad')->nullable();
             $table->String('Direccion')->nullable();
-            $table->JSON('Contacto')->nullable();
-            $table->JSON('Horario')->nullable();
+            $table->String('HoraDeApertura')->nullable();
+            $table->String('HoraDeCierre')->nullable();
+            $table->String('Facebook')->nullable();
+            $table->String('Instagram')->nullable();
             $table->String('Descripcion')->nullable();
             $table->String('Imagen')->nullable();
             $table->timestamps();
