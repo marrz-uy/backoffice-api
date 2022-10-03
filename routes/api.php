@@ -14,3 +14,5 @@ Route::patch('/PuntosInteres/{id}', [PuntosInteresController::class, 'update']);
 Route::delete('/PuntosInteres/{id}', [PuntosInteresController::class, 'destroy']);
 
 Route::get('/Eventos', [EventosController::class, 'show']);
+Route::post('/Eventos', [EventosController::class, 'store']);
+Route::delete('/Eventos/{id}', [EventosController::class, 'destroy']);

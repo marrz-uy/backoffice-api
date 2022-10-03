@@ -28,7 +28,17 @@ class EventosController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $evento=new Eventos();
+        $evento->puntosinteres_id=$request->LugarDelEvento;
+        $evento->Nombre=$request->Nombre;
+        $evento->LugarDeVentaDeEntradas=$request->LugarDeVentaDeEntradas;
+        $evento->FechaInicio=$request->FechaInicio;
+        $evento->FechaFin=$request->FechaFin;
+        $evento->HoraInicio=$request->HoraInicio;
+        $evento->HoraFin=$request->HoraFin;
+        $evento->Tipo=$request->TipoDeEvento;
+        $evento->save();
+        return response() ->json(['codigo'=>'200',"respuesta"=>'Se registro el evento correctamente']);
     }
 
     
@@ -50,8 +60,13 @@ class EventosController extends Controller
     }
 
     
-    public function destroy(Eventos $eventos)
+    public function destroy($id)
     {
-        //
+        $evento=Eventos::findOrFail($id);
+        $evento->delete();
+         return response()->json([
+            "codigo"    => "200",
+            "respuesta" => "Se elimino con exito",
+        ]);
     }
 }

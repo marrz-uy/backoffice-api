@@ -17,14 +17,10 @@ class PuntoDeInteresSeeder extends Seeder
      */
     public function run()
     {
-        for($c = 0; $c < 10; $c++)
+        for($c = 0; $c < 40; $c++)
             DB::table('puntosinteres')->insert([
-                'Nombre' => Str::random(10),
-                'Departamento' => Str::random(10),
-                'Ciudad' => Str::random(10),
-                'Direccion' => Str::random(10),
-                'Descripcion' => Str::random(10),
-                'Imagen' => Str::random(10) . ".jpg",
+                'Nombre' => 'PuntodeInteres'.$c,
+                
             ]);
     }
 }
