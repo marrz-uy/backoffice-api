@@ -42,8 +42,19 @@ class EventosController extends Controller
     }
 
     
-    public function show(Eventos $eventos)
+    public function show(Request $request)
     {
+        if($request->Opcion==='Unico'){
+            $evento=Eventos::findOrFail($request->id);
+            return response() ->json($evento);
+        }
+        if($request->Opcion==='Eventoypunto'){
+            $eventopunto = DB::table('puntosinteres')
+            ->Join('eventos','puntosinteres.id','=','puntosinteres_id')
+            //->where('puntosinteres.id','=',$request->id)
+            ->paginate(10);
+            return response()->json($eventopunto);
+        }
         $eventos=Eventos::paginate(10);
         return response() ->json($eventos);
     }
