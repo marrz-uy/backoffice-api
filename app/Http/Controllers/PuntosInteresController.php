@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PuntosInteres;
 use App\Models\ServiciosEsenciales;
+use App\Models\Transporte;
 use App\Models\Telefonos;
 use App\Models\Espectaculos;
 use Illuminate\Http\Request;
@@ -55,6 +56,9 @@ class PuntosInteresController extends Controller
         if ($PuntosDeInteresDetallado->Op === 'ServicioEsencial') {
             return $this->AltaDeServicio($id->id, $PuntosDeInteresDetallado->Tipo);
         }
+        if ($PuntosDeInteresDetallado->Op === 'transporte') {
+            return $this->AltaDeTransporte($id->id, $PuntosDeInteresDetallado->Tipo);
+        }
         if ($PuntosDeInteresDetallado->Op === 'Espectaculos') {
             return $this->AltaDeEspectaculos($id->id,$PuntosDeInteresDetallado->Artista,$PuntosDeInteresDetallado->PrecioEntrada,$PuntosDeInteresDetallado->Tipo);
         }
@@ -76,6 +80,17 @@ class PuntosInteresController extends Controller
         $servicio->puntosinteres_id = $IdPuntoDeInteres;
         $servicio->Tipo             = $TipoDetallado;
         $servicio->save();
+        return response()->json([
+            "codigo"    => "200",
+            "respuesta" => "Se ingreso con exito",
+        ]);
+    }
+    public function AltaDeTransporte($IdPuntoDeInteres, $TipoDetallado)
+    {
+        $transporte                   = new Transporte();
+        $transporte->puntosinteres_id = $IdPuntoDeInteres;
+        $transporte->Tipo             = $TipoDetallado;
+        $transporte->save();
         return response()->json([
             "codigo"    => "200",
             "respuesta" => "Se ingreso con exito",
