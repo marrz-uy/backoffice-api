@@ -68,14 +68,14 @@ class EventosController extends Controller
     public function update(Request $request,$idEvento)
     {
         $evento               = Eventos::findOrFail($idEvento);
-        $evento->puntosinteres_id = $request->puntosinteres_id;
+        $evento->puntosinteres_id = $request->LugarDelEvento;
         $evento->Nombre       = $request->Nombre;
         $evento->LugarDeVentaDeEntradas       = $request->LugarDeVentaDeEntradas;
         $evento->FechaInicio    = $request->FechaInicio;
         $evento->FechaFin = $request->FechaFin;
         $evento->HoraInicio = $request->HoraInicio;
         $evento->HoraFin     = $request->HoraFin;
-        $evento->Tipo    = $request->Tipo;
+        $evento->Tipo    = $request->TipoDeEvento;
         $evento->save();
 
         return response()->json([

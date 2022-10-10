@@ -137,24 +137,24 @@ class PuntosInteresController extends Controller
     }
     public function update(Request $request, $IdPuntoDeInteres)
     {
-        // $puntosInteres               = PuntosInteres::findOrFail($IdPuntoDeInteres);
-        // $puntosInteres->Nombre       = $request->Nombre;
-        // $puntosInteres->Departamento = $request->Departamento;
-        // $puntosInteres->Ciudad       = $request->Ciudad;
-        // $puntosInteres->Direccion    = $request->Direccion;
-        // $puntosInteres->HoraDeApertura = $request->HoraDeApertura;
-        // $puntosInteres->HoraDeCierre = $request->HoraDeCierre;
-        // $puntosInteres->Facebook     = $request->Facebook;
-        // $puntosInteres->Instagram    = $request->Instagram;
-        // $puntosInteres->Descripcion  = $request->Descripcion;
-        // $puntosInteres->Imagen       = $request->Imagen;
-        // $puntosInteres->save();
+        $puntosInteres               = PuntosInteres::findOrFail($IdPuntoDeInteres);
+        $puntosInteres->Nombre       = $request->Nombre;
+        $puntosInteres->Departamento = $request->Departamento;
+        $puntosInteres->Ciudad       = $request->Ciudad;
+        $puntosInteres->Direccion    = $request->Direccion;
+        $puntosInteres->HoraDeApertura = $request->HoraDeApertura;
+        $puntosInteres->HoraDeCierre = $request->HoraDeCierre;
+        $puntosInteres->Facebook     = $request->Facebook;
+        $puntosInteres->Instagram    = $request->Instagram;
+        $puntosInteres->Descripcion  = $request->Descripcion;
+        $puntosInteres->Imagen       = $request->Imagen;
+        $puntosInteres->save();
 
-        // return response()->json([
-        //     "codigo"    => '200',
-        //     "respuesta" => "Se modifico con exito",
-        // ]);
-        return $this->ModificarTelefonos($IdPuntoDeInteres,$request->Telefono);
+        return response()->json([
+            "codigo"    => '200',
+            "respuesta" => "Se modifico con exito",
+        ]);
+       // return $this->ModificarTelefonos($IdPuntoDeInteres,$request->Telefono);
         
     }
     
