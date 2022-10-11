@@ -35,8 +35,8 @@ class PuntosInteresController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        try {
-        DB::beginTransaction();
+        //try {
+        //DB::beginTransaction();
         $puntosInteres               = new PuntosInteres();
         $puntosInteres->Nombre       = $request->Nombre;
         $puntosInteres->Departamento = $request->Departamento;
@@ -63,15 +63,15 @@ class PuntosInteresController extends Controller
             return $this->AltaDeEspectaculos($id->id,$PuntosDeInteresDetallado->Artista,$PuntosDeInteresDetallado->PrecioEntrada,$PuntosDeInteresDetallado->Tipo);
         }
 
-        DB::commit();
+        //DB::commit();
         return response()->json([
             "codigo"    => "200",
             "respuesta" => "Se ingreso con exito",
         ]);
-    }
-    catch(Exception $e){
-        DB::rollBack();
-    }
+    //}
+    // catch(Exception $e){
+    //     DB::rollBack();
+    // }
 
     }
     public function AltaDeServicio($IdPuntoDeInteres, $TipoDetallado)
