@@ -21,6 +21,8 @@ return new class extends Migration
             $table->String('Instagram')->nullable();
             $table->String('Descripcion')->nullable();
             $table->String('Imagen')->nullable();
+            $table->integer('Latitud')->nullable();
+            $table->integer('Longitud')->nullable();
             $table->timestamps();
         });
     }
